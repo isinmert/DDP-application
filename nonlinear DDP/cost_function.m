@@ -1,0 +1,34 @@
+function [Qx, Qu, Qxx, Quu, Qux] = cost_function( x, u, fx, fu, fxx, fuu, fux )
+N=1000;
+xd=[pi;0];
+A=100000*eye(2);
+V=zeros(N);
+Vx=zeros(2,N);
+Vxx=zeros(2,2,N);
+Qx=zeros(2,N-1);
+Qxx=zeros(2,2,N-1);
+Qu=zeros(1,N-1);
+Quu=zeros(1,1,N-1);
+Qux=zeros(1,2,N-1);
+lx=zeros(2,N-1);
+lu=zeros(1,N-1);
+lxx(:,:,N-1)=[100 0;0 1]*0.01;
+luu(1:N-1)=0.01;
+lux=zeros(1,2,N-1);
+V(N)  = 0.5*((x(1:2,N)-[pi;0])'*A*(x(1:2,N)-[pi;0]));
+Vx(:,N) = A*(x(1:2,N)-[pi;0]);
+Vxx(:,:,N)=  A;
+for i=N:-1:2
+    lx(:,i-1) = [100 0;0 1]*0.01*(x(:,i-1)-xd);
+    lu(:,i-1) = 0.01*u(:,i-1);
+    lxx(:,:,i-1)=[100 0;0 1]*0.01;
+    luu(:,i-1) = 0.01;
+    Qx(:,i-1)  = lx(:,i-1)  + (fx(:,:,i-1)')*Vx(:,i);
+    Qu(:,i-1)  = lu(:,i-1)  + (fu(:,i-1)')*Vx(:,i);
+    Qxx(:,:,i-1) = lxx(:,:,i-1) + (fx(:,:,i-1)')*Vxx(:,:,i)*(fx(:,:,i-1))  ;
+    Qux(:,:,i-1) = lux(:,:,i-1) + (fu(:,i-1)')*Vxx(:,:,i)*(fx(:,:,i-1)) ;
+    Quu(:,:,i-1) = luu(i-1) + fu(:,i-1)'*Vxx(:,:,i)*fu(:,i-1);
+    Vx(:,i-1)  = Qx(:,i-1)  - Qux(:,:,i-1)'*((Quu(:,:,i-1))\Qu(:,i-1));
+    Vxx(:,:,i-1) = Qxx(:,:,i-1) - Qux(:,:,i-1)'*((Quu(:,:,i-1)\Qux(:,:,i-1)));
+end
+
