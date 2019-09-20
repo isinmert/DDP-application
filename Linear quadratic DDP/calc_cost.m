@@ -1,6 +1,7 @@
 function [ cost ] = calc_cost( x, u, N )
-%UNTÝTLED Summary of this function goes here
-%   Detailed explanation goes here
+%   Given the parameters of the quadratic cost function (A, B, C)
+%   state and input histories (x, u) and time horizon N, function 
+%   computes the totoal accumulated cost
     cost=0;
     xd=[5;0];
     A=eye(2);
