@@ -1,4 +1,6 @@
 function [ newu ] = new_control( u, Qu, Quu, Qux, fx, fu )
+% new_control updates control input sequence according to differential dynamic
+% programming algorithm. 
 N=1000;
 h=1;
 k=zeros(1,1,N);
@@ -18,4 +20,3 @@ for i=1:999
 end
 
 end
-
