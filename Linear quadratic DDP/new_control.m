@@ -1,6 +1,6 @@
 function [ newu ] = new_control( u, Qu, Quu, Qux, N, fx, fu )
-%UNTÝTLED2 Summary of this function goes here
-%   Detailed explanation goes here
+% Given cost matrices Qs system dynamics and nominal cost this function updates
+% control input sequence by differential dynamic programming algorithm
 
 k=zeros(1,1,N);
 K=zeros(1,2,N);
@@ -19,4 +19,3 @@ for i=1:N-1
 end
 
 end
-

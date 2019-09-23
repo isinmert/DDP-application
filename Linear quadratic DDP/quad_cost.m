@@ -1,6 +1,6 @@
 function [ Qx, Qu, Qxx, Quu, Qux, Vx, Vxx ] = quad_cost( x, u, N, fx, fu )
-%UNTÝTLED3 Summary of this function goes here
-%   J(x0)= V(x(N)) + sigma(x(i)^2 + u(i)^2)
+% function that computes the quadratic cost matrices and necessary variables
+% for DDP algorithm to run
 xd=[5;0];
 V=zeros(N);
 Vx=zeros(2,N);
@@ -34,4 +34,3 @@ end
 
 
 end
-

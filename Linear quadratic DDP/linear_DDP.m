@@ -1,4 +1,6 @@
 function [ x, newu, cost1, cost2 ] = linear_DDP( N )
+% main function that evaluates and updates the control sequence running main
+% body iteratively will converge to the optimal control sequence
 x0=[0;0];
 u=zeros(1,N);
 [ x, fx, fu ] = linear_dyn( x0,u, N );
@@ -10,4 +12,3 @@ u=zeros(1,N);
 
 
 end
-
